@@ -40,8 +40,3 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) st
 ## New features & bug fixes
 
 Within this project, we follow a _Test-Driven Development_ (TDD) approach.
-All your contribution should be covered by tests as follow:
-
-- Unit tests for the `core` and `lib/edc-manager-client` sub-libraries. When we create new features, or when we fix a bug in the core business logic, we must provide tests for these cases.
-- Integration tests for the `api` service. We want to test the integration with our core business logic, ensure that any calulation done in the transportation layer is covered, and we'll return proper responses to our clients.
-- End-to-end tests for the `www` service.
