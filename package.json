@@ -1,5 +1,5 @@
 {
-  "name": "@think-it/typed-error",
+  "name": "@think-it-labs/typed-error",
   "version": "0.1.0",
   "description": "JavaScript Error for TypeScript projects",
   "main": "dist/index.js",
