@@ -1,0 +1,68 @@
+name: Pull request testing
+
+on:
+  push:
+    branches-ignore: 
+      - main
+    paths:
+      - '.github/workflows/pull-request-testing.yml'
+      - 'jest.config.ts'
+      - 'src/**/*.ts'
+
+jobs:
+  dependencies:
+    name: Install and cache dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+
+      - name: Cache dependencies 
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: yarn-deps-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: |
+          yarn
+
+  unit:
+    name: Unit and integration tests
+    needs: dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Wait for Docker environment to be ready
+        run: ./scripts/wait-catena-x-at-home-ready.sh
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+
+      - name: Cache dependencies 
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: yarn-deps-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: |
+          yarn
+
+      - name: Run tests
+        run: yarn test
+        env:
+          CI: true
