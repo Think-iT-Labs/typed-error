@@ -58,7 +58,7 @@ Now, during error handling code can inspect the `type` error and define behaviou
 ```ts
 import { MyError, MyErrorType } from "./my-error"
 
-export function errorHandling(error: unknonw) {
+export function errorHandling(error: unknown) {
   if (error instanceof MyError) {
     switch (error.type) {
       case MyErrorType.HTTP: {
