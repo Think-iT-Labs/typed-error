@@ -16,11 +16,15 @@ await build({
     // package.json properties
     name: "@think-it-labs/typed-error",
     version: Deno.args[0],
-    description: "JavaScript Error for TypeScript projects.",
+    description:
+      "A better JavaScript Error for for Node.js, Deno and the browser.",
     license: "MIT",
     repository: {
       type: "git",
       url: "git+https://github.com/think-it-labs/typed-error.git",
+    },
+    engines: {
+      node: ">=16.9",
     },
     bugs: {
       url: "https://github.com/think-it-labs/typed-error/issues",
