@@ -1,6 +1,6 @@
 /**
  * `TypedError` is a superset of the `Error` class.
- * It extends it by allowing the specialisation to a custom _type_.
+ * It extends it by allowing the specialization to a custom _type_.
  *
  * **Example:**
  * ```ts
@@ -14,7 +14,7 @@
  * ```
  */
 export class TypedError<T> extends Error {
-  /** Specialisation type */
+  /** Specialization type */
   type: T;
 
   constructor(type: T, message?: string, options?: ErrorOptions) {

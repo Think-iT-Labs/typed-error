@@ -1,7 +1,11 @@
-import { TypedError } from "../src";
+import { TypedError } from "../mod.ts";
+import {
+  assertEquals,
+  assertInstanceOf,
+} from "https://deno.land/std@0.170.0/testing/asserts.ts";
 
-describe("TypedError", () => {
-  it("instantiate a typed error", () => {
+Deno.test("TypedError", async (t) => {
+  await t.step("instantiate a typed error", () => {
     // given
     class TestError extends TypedError<"test"> {}
 
@@ -9,14 +13,14 @@ describe("TypedError", () => {
     const error = new TestError("test");
 
     // then
-    expect(error).toBeInstanceOf(TestError);
-    expect(error).toBeInstanceOf(TypedError);
-    expect(error.type).toBe("test");
-    expect(error.name).toBe("TestError(test)");
-    expect(error.message).toBe("");
+    assertInstanceOf(error, TestError);
+
+    assertEquals(error.type, "test");
+    assertEquals(error.name, "TestError(test)");
+    assertEquals(error.message, "");
   });
 
-  it("receives an optional message", () => {
+  await t.step("receives an optional message", () => {
     // given
     class TestError extends TypedError<"test-with-message"> {}
 
@@ -24,12 +28,12 @@ describe("TypedError", () => {
     const error = new TestError("test-with-message", "the error message");
 
     // then
-    expect(error.type).toBe("test-with-message");
-    expect(error.name).toBe("TestError(test-with-message)");
-    expect(error.message).toBe("the error message");
+    assertEquals(error.type, "test-with-message");
+    assertEquals(error.name, "TestError(test-with-message)");
+    assertEquals(error.message, "the error message");
   });
 
-  it("receives an optional error options", () => {
+  await t.step("receives an optional error options", () => {
     // given
     class TestError extends TypedError<"test-with-cause"> {}
 
@@ -40,9 +44,9 @@ describe("TypedError", () => {
     });
 
     // then
-    expect(error.type).toBe("test-with-cause");
-    expect(error.name).toBe("TestError(test-with-cause)");
-    expect(error.message).toBe("an error with cause");
-    expect(error.cause).toBe(cause);
+    assertEquals(error.type, "test-with-cause");
+    assertEquals(error.name, "TestError(test-with-cause)");
+    assertEquals(error.message, "an error with cause");
+    assertEquals(error.cause, cause);
   });
 });
