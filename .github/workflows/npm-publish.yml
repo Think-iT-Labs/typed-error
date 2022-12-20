@@ -1,4 +1,4 @@
-name: Publish Package to npmjs
+name: Publish Package to npm
 
 on:
   release:
@@ -11,30 +11,29 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18.x
+      - name: Setup Deno - Latest
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      - name: Setup Node.js - 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
 
-      - name: Cache dependencies 
-        uses: actions/cache@v3
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: yarn-deps-${{ hashFiles('**/yarn.lock') }}
+      - name: Get tag version
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_tag_version
+        run: echo ::set-output name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
 
-      - name: Install dependencies
+      - name: Build for npm
+        run: deno run -A ./scripts/build.ts ${{steps.get_tag_version.outputs.TAG_VERSION}}
+
+      - name: Publish to npm
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
-          yarn
-
-      - name: Run tests
-        run: yarn test
-
-      - name: Transpile to JavaScript
-        run: yarn transpile
-
-      - run: npm publish --access=public
+          cd npm
+          npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

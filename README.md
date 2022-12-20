@@ -29,6 +29,8 @@ a smoother error handling story.
 
 ## Usage
 
+### Node.js
+
 Install via `npm` or `yarn`
 
 ```sh
@@ -39,11 +41,17 @@ npm install @think-it-labs/typed-error
 yarn add @think-it-labs/typed-error
 ```
 
+### Deno
+
+Import as ES module
+
+```ts
+import { TypedError } from "https://deno.land/x/typederror/mod.ts"
+```
+
 Then it's possible to create a custom `Error` class extending the `TypedError`
 
 ```ts
-import { TypedError } from "@think-it-labs/typed-error"
-
 enum MyErrorType {
   Unknown,
   HTTP,
