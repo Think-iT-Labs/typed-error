@@ -2,7 +2,7 @@
   <h1>TypedError ⌨️💥</h1>
   <p>
     <b>
-      JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank">Error</a> for TypeScript projects.
+      A better JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank">Error</a> for Node.js, Deno and the browser.
     </b>
   </p>
   <sub>
@@ -17,7 +17,7 @@ large projects.
 The [JavaScript `Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
 is a necessary component of the error handling story, but it's often too limited.
 
-The main difficulty is categorising errors; when building the main business logic
+The main difficulty is categorizing errors; when building the main business logic
 of any project, it's common to encounter similar errors (e.g. duplicate entities,
 forbidden access, etc.), and relying on
 [`Error.prototype.message`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message)
@@ -53,7 +53,7 @@ export class MyError extends TypedError<MyErrorType> {}
 
 ```
 
-Now, during error handling code can inspect the `type` error and define behaviour accordingly
+Now, during error handling code can inspect the `type` error and define behavior accordingly
 
 ```ts
 import { MyError, MyErrorType } from "./my-error"
@@ -66,7 +66,7 @@ export function errorHandling(error: unknown) {
       }
       case MyErrorType.Unknown:
       default: {
-        // red alert: unknown behaviour
+        // red alert: unknown behavior
       }
     }
   }
